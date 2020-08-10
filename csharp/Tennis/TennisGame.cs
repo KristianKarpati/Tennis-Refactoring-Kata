@@ -5,6 +5,19 @@ namespace Tennis
         Player player1;
         Player player2;
 
+        // Labels for scoring
+        public enum Scores
+        {
+            Love,
+            Fifteen,
+            Thirty,
+            Forty,
+            All,
+            Advantage,
+            Deuce,
+            Win
+        }
+
         public TennisGame(Player player1, Player player2)
         {
             this.player1 = player1;
@@ -21,24 +34,8 @@ namespace Tennis
 
         private string ScoreTied(int player1Score)
         {
-            string score;
-            switch (player1Score)
-            {
-                case 0:
-                    score = "Love-All";
-                    break;
-                case 1:
-                    score = "Fifteen-All";
-                    break;
-                case 2:
-                    score = "Thirty-All";
-                    break;
-                default:
-                    score = "Deuce";
-                    break;
-
-            }
-            return score;
+            if (player1Score < 3) return ((Scores)player1Score).ToString() + '-' + Scores.All;
+            else return Scores.Deuce.ToString();
         }
 
         private string ScoreStandard(int player1Score, int player2Score, string score)
@@ -48,44 +45,23 @@ namespace Tennis
             {
                 if (i == 1) tempScore = player1Score;
                 else { score += "-"; tempScore = player2Score; }
-                switch (tempScore)
-                {
-                    case 0:
-                        score += "Love";
-                        break;
-                    case 1:
-                        score += "Fifteen";
-                        break;
-                    case 2:
-                        score += "Thirty";
-                        break;
-                    case 3:
-                        score += "Forty";
-                        break;
-                }
+                score += ((Scores)tempScore).ToString();
             }
-
             return score;
         }
 
         private string ScoreAdvantage(int player1Score, int player2Score)
         {
-            string score;
             int minusResult = player1Score - player2Score;
-            if (minusResult == 1) score = "Advantage " + player1.name;
-            else score = "Advantage " + player2.name;
-
-            return score;
+            if (minusResult == 1) return Scores.Advantage + " " + player1.name;
+            else return Scores.Advantage + " " + player2.name;
         }
 
         private string DisplayWinner(int player1Score, int player2Score)
         {
-            string score;
             int minusResult = player1Score - player2Score;
-            if (minusResult >= 2) score = "Win for " + player1.name;
-            else score = "Win for " + player2.name;
-
-            return score;
+            if (minusResult >= 2) return Scores.Win + " for " + player1.name;
+            else return Scores.Win + " for " + player2.name;
         }
 
         public string GetScore()
