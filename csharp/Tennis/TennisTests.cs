@@ -17,14 +17,14 @@ namespace Tennis
 		[TestCase( 0,  2, "Love-Thirty")]
 		[TestCase( 3,  0, "Forty-Love")]
 		[TestCase( 0,  3, "Love-Forty")]
-		[TestCase( 4,  0, "Win for player1")]
-		[TestCase( 0,  4, "Win for player2")]
+		[TestCase( 4,  0, "Win for player1", "player1")]
+		[TestCase( 0,  4, "Win for player2", "player1", "player2")]
 		[TestCase( 2,  1, "Thirty-Fifteen")]
 		[TestCase( 1,  2, "Fifteen-Thirty")]
 		[TestCase( 3,  1, "Forty-Fifteen")]
 		[TestCase( 1,  3, "Fifteen-Forty")]
-		[TestCase( 4,  1, "Win for player1")]
-		[TestCase( 1,  4, "Win for player2")]
+		[TestCase( 4,  1, "Win for Kristian", "Kristian")]
+		[TestCase( 1,  4, "Win for Steve", "Kristian", "Steve")]
 		[TestCase( 3,  2, "Forty-Thirty")]
 		[TestCase( 2,  3, "Thirty-Forty")]
 		[TestCase( 4,  2, "Win for player1")]
@@ -65,7 +65,14 @@ namespace Tennis
 			TennisGame game = new TennisGame(player1, player2);
 
 			Player[] points = { player1, player1, player2, player2, player1, player1 };
-			string[] expectedScores = { "Fifteen-Love", "Thirty-Love", "Thirty-Fifteen", "Thirty-All", "Forty-Thirty", "Win for " + player1.name };
+			string[] expectedScores = {
+				TennisGame.Scores.Fifteen.ToString() + '-' + TennisGame.Scores.Love.ToString(),
+				TennisGame.Scores.Thirty.ToString() + '-' + TennisGame.Scores.Love.ToString(),
+				TennisGame.Scores.Thirty.ToString() + '-' + TennisGame.Scores.Fifteen.ToString(),
+				TennisGame.Scores.Thirty.ToString() + '-' + TennisGame.Scores.All.ToString(),
+				TennisGame.Scores.Forty.ToString() + '-' + TennisGame.Scores.Thirty.ToString(),
+				TennisGame.Scores.Win.ToString() + " for " + player1.name
+			};
 
 			for (int i = 0; i < 6; i++)
 			{
