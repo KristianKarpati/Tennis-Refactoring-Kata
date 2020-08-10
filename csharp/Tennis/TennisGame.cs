@@ -2,23 +2,21 @@ namespace Tennis
 {
     class TennisGame : ITennisGame
     {
-        private int player1Score = 0;
-        private int player2Score = 0;
-        private string player1Name;
-        private string player2Name;
+        Player player1;
+        Player player2;
 
-        public TennisGame(string player1Name, string player2Name)
+        public TennisGame(Player player1, Player player2)
         {
-            this.player1Name = player1Name;
-            this.player2Name = player2Name;
+            this.player1 = player1;
+            this.player2 = player2;
         }
 
-        public void WonPoint(string playerName)
+        public void WonPoint(Player player)
         {
-            if (playerName == "player1")
-                player1Score += 1;
+            if (player.name == player1.name)
+                player1.score += 1;
             else
-                player2Score += 1;
+                player2.score += 1;
         }
 
         private string ScoreTied(int player1Score)
@@ -74,8 +72,8 @@ namespace Tennis
         {
             string score;
             int minusResult = player1Score - player2Score;
-            if (minusResult == 1) score = "Advantage player1";
-            else score = "Advantage player2";
+            if (minusResult == 1) score = "Advantage " + player1.name;
+            else score = "Advantage " + player2.name;
 
             return score;
         }
@@ -84,8 +82,8 @@ namespace Tennis
         {
             string score;
             int minusResult = player1Score - player2Score;
-            if (minusResult >= 2) score = "Win for player1";
-            else score = "Win for player2";
+            if (minusResult >= 2) score = "Win for " + player1.name;
+            else score = "Win for " + player2.name;
 
             return score;
         }
@@ -93,20 +91,20 @@ namespace Tennis
         public string GetScore()
         {
             string score = "";
-            if (player1Score == player2Score)
+            if (player1.score == player2.score)
             {
-                score = ScoreTied(player1Score);
+                score = ScoreTied(player1.score);
             }
-            else if (player1Score >= 4 || player2Score >= 4)
+            else if (player1.score >= 4 || player2.score >= 4)
             {
-                if (player1Score - player2Score == 1 || player1Score - player2Score == -1)
-                    score = ScoreAdvantage(player1Score, player2Score);
+                if (player1.score - player2.score == 1 || player1.score - player2.score == -1)
+                    score = ScoreAdvantage(player1.score, player2.score);
                 else
-                    score = DisplayWinner(player1Score, player2Score);
+                    score = DisplayWinner(player1.score, player2.score);
             }
             else
             {
-                score = ScoreStandard(player1Score, player2Score, score);
+                score = ScoreStandard(player1.score, player2.score, score);
             }
             return score;
         }
