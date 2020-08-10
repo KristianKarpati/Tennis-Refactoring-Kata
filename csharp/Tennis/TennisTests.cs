@@ -41,10 +41,10 @@ namespace Tennis
 		[TestCase(14, 16, "Win for player2")]
 		public void CheckTennisGame(int player1Score, int player2Score, string expectedScore)
 		{
-			var game = new TennisGame("player1", "player2");
+			TennisGame game = new TennisGame("player1", "player2");
 
-			var highestScore = Math.Max(player1Score, player2Score);
-			for (var i = 0; i < highestScore; i++)
+			int highestScore = Math.Max(player1Score, player2Score);
+			for (int i = 0; i < highestScore; i++)
 			{
 				if (i < player1Score)
 					game.WonPoint("player1");
@@ -57,12 +57,12 @@ namespace Tennis
 		[Test]
 		public void CheckRealisticGame()
 		{
-			var game = new TennisGame("player1", "player2");
+			TennisGame game = new TennisGame("player1", "player2");
 
 			string[] points = { "player1", "player1", "player2", "player2", "player1", "player1" };
 			string[] expectedScores = { "Fifteen-Love", "Thirty-Love", "Thirty-Fifteen", "Thirty-All", "Forty-Thirty", "Win for player1" };
 
-			for (var i = 0; i < 6; i++)
+			for (int i = 0; i < 6; i++)
 			{
 				game.WonPoint(points[i]);
 				Assert.AreEqual(expectedScores[i], game.GetScore());
